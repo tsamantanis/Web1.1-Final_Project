@@ -1,32 +1,48 @@
-from flask import Flask, request, redirect, render_template, url_for
-from flask_pymongo import PyMongo
-from bson.objectid import ObjectId
+from flask import request, redirect, render_template, url_for
+import json
+# from flask_pymongo import PyMongo
+# from bson.objectid import ObjectId
+from setup import app
+from setup import database
+from setup import ObjectId
 from datetime import datetime, timedelta
 
 from timeslots import timeslots
 from Event import Event
 from Employee import Employee
-############################################################
-# SETUP
-############################################################
+from Calendar import Calendar
 
-app = Flask(__name__)
-
-app.config["MONGO_URI"] = "mongodb://localhost:27017/kanbanCalendar"
-mongo = PyMongo(app)
-database = mongo.db
-############################################################
-# ROUTES
-############################################################
+# app = Flask(__name__)
+#
+# app.config["MONGO_URI"] = "mongodb://localhost:27017/kanbanCalendar"
+# mongo = PyMongo(app)
+# database = mongo.db
 
 @app.route('/')
 def home():
     """Display all events and employees in kanban calendar."""
+
     context = {
-        'employees': database.empoyees.find(),
+        'employees': database.employees.find(),
         'events': database.events.find()
     }
     return render_template('home.html', **context)
+
+@app.route('/get_calendar')
+def get_calendar():
+    """Returns current state of the calendar"""
+    employees = database.employees.find()
+    employee_list = []
+    for employee in employees:
+        a_employee = Employee(employee['first_name'], employee['last_name'], employee['email'])
+        id = employee['_id']
+        a_employee.set_id(str(id))
+        print(a_employee.id)
+        a_employee.get_events()
+        employee_list.append(a_employee)
+    calendar = Calendar(employee_list)
+    print(calendar.get_dict())
+    return json.dumps(calendar.get_dict())
 
 @app.route('/new_event', methods=['GET', 'POST'])
 def new_event():

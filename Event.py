@@ -14,9 +14,11 @@ class Event():
 
     def get_dict(self):
         """Override abstract method get_dict"""
+        employee_id = self.employee
         return {
+            "id": self.id,
             "title": self.title,
-            "employee": self.employee,
+            "employee_id": str(employee_id),
             "color": self.color,
             "details": self.details,
             "date": self.date,
