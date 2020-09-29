@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<main class="row">
+    <div class="col-12 col-md-8">
+        <h1>New Event</h1>
+    </div>
+
+    <form class="col-12 col-md-6"  method='POST'>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <label>
+                    Title <br  />
+                    <input type="text" name="title" class="d-block"/>
+                </label>
+            </div>
+            <div class="col-12 col-md-6">
+                <label>
+                    Employee <br  />
+                    <select name="employee"class="d-block">
+                        {% for employee in employees %}
+                            <option value={{employee._id}}>
+                                {{employee.first_name + " " + employee.last_name}}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <label>
+                    Date <br  />
+                    <input type="date" name="date" min="{{ min_date.strftime('%Y-%m-%d') }}" max="{{ max_date.strftime('%Y-%m-%d') }}" class="d-block">
+                </label>
+            </div>
+            <div class="col-12 col-md-6">
+                <label>
+                    Timeslot <br  />
+                    <select name="timeslot" class="d-block">
+                        {% for timeslot in timeslots %}
+                            <option value={{timeslot}}>
+                                {{timeslot}}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <label>
+                    Details <br  />
+                    <input type="textarea" name="details" class="d-block"/>
+                </label>
+            </div>
+            <div class="col-12 col-md-6">
+                <label>
+                    Color <br  />
+                    <input type="color" name="color" class="d-block">
+                </label>
+            </div>
+        </div>
+        <input type="submit" class="button button-availability btn-block" value="Submit">
+    </form>
+</main>
+
+{% endblock content %}
