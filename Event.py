@@ -13,7 +13,7 @@ class Event():
         self.id = id
 
     def get_dict(self):
-        """Override abstract method"""
+        """Override abstract method get_dict"""
         return {
             "title": self.title,
             "employee": self.employee,
@@ -24,7 +24,7 @@ class Event():
         }
 
     def update(self, title, employee, color, details, date, timeslot):
-        """Override abstract method"""
+        """Override abstract method update"""
         self.title = title
         self.employee = employee
         self.color = color
@@ -32,3 +32,7 @@ class Event():
         self.date = date
         self.timeslot = timeslot
         database.events.update_one({"_id": ObjectId(self.id)}, { "$set": get_dict() })
+
+    def delete(self):
+        """Overrise abstract method delete"""
+        database.events.delete_one({"_id": ObjectId(self.id)})

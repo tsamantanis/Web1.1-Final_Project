@@ -23,3 +23,7 @@ class Employee():
         self.last_name = last_name
         self.email = email
         database.employees.update_one({"_id": ObjectId(self.id)}, { "$set": get_dict() })
+
+    def delete(self):
+        """Overrise abstract method delete"""
+        database.employees.delete_one({"_id": ObjectId(self.id)})

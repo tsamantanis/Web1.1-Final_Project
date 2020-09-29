@@ -13,3 +13,7 @@ class DB_Entity(ABC):
     def update(self):
         """Updates database entity details"""
         pass
+
+    def delete(self):
+        """Deletes database entity"""
+        pass
