@@ -1,3 +1,4 @@
+from setup import ObjectId
 class Event():
     def __init__(self, title, employee, color, details, date, timeslot):
         """Initialize instance of Event class with title, employee, color, details, and timeslot properties"""
@@ -16,9 +17,9 @@ class Event():
         """Override abstract method get_dict"""
         employee_id = self.employee
         return {
-            "id": self.id,
+            # "id": self.id,
             "title": self.title,
-            "employee_id": str(employee_id),
+            "employee": ObjectId(employee_id),
             "color": self.color,
             "details": self.details,
             "date": self.date,

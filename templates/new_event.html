@@ -40,7 +40,7 @@
                     Timeslot <br  />
                     <select name="timeslot" class="d-block">
                         {% for timeslot in timeslots %}
-                            <option value={{timeslot}}>
+                            <option value={{timeslot | string() }}>
                                 {{timeslot}}
                             </option>
                         {% endfor %}

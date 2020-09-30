@@ -5,7 +5,7 @@ import json
 from setup import app
 from setup import database
 from setup import ObjectId
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 from timeslots import timeslots
 from Event import Event
@@ -21,7 +21,7 @@ from Calendar import Calendar
 @app.route('/')
 def home():
     """Display all events and employees in kanban calendar."""
-
+    print(date.today())
     context = {
         'employees': database.employees.find(),
         'events': database.events.find()
@@ -37,17 +37,22 @@ def get_calendar():
         a_employee = Employee(employee['first_name'], employee['last_name'], employee['email'])
         id = employee['_id']
         a_employee.set_id(str(id))
-        print(a_employee.id)
-        a_employee.get_events()
+        a_employee.get_events_today()
         employee_list.append(a_employee)
-    calendar = Calendar(employee_list)
-    print(calendar.get_dict())
-    return json.dumps(calendar.get_dict())
+    # calendar = Calendar(employee_list)
+    # print(calendar.get_dict())
+    # return json.dumps(calendar.get_dict())
+    context = {
+        "timeslots": timeslots,
+        "employee_list": employee_list
+    }
+    return render_template('calendar.html', **context)
 
 @app.route('/new_event', methods=['GET', 'POST'])
 def new_event():
     """Display the fruit creation page & process data from the creation form."""
     if request.method == 'POST':
+        print(request.form['timeslot'])
         new_event = Event(
             request.form['title'],
             ObjectId(request.form['employee']),
@@ -57,8 +62,8 @@ def new_event():
             request.form['timeslot']
         )
 
-        res = atabase.events.insert_one(new_event.get_dict())
-        new_event.set_id(res.inserted_id)
+        # res = database.events.insert_one(new_event.get_dict())
+        # new_event.set_id(res.inserted_id)
         return redirect(url_for('home'))
 
     else:

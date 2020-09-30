@@ -1,0 +1,31 @@
+{% extends 'home.html' %}
+{% block home_content %}
+
+<div class="calendar_container">
+    {% for employee in employee_list %}
+        <div class="employee_container">
+            <h2>{{employee.first_name + " " + employee.last_name}}</h2>
+                {% for key, value in employee.events.items() %}
+                    {% if value == "" %}
+                        <a href="/new_event">
+                            <div class="event_space">
+                                <h4>Add Event</h4>
+                            </div>
+                        </a>
+                    {% else %}
+                        <div class="event_container">
+                            <h3>{{value.title}}</h3>
+                            <p>
+                                {{value.details}}
+                            </p>
+                            <p>
+                                {{value.timeslot}}
+                            </p>
+                        </div>
+                    {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock home_content %}
