@@ -50,9 +50,8 @@ def get_calendar():
 
 @app.route('/new_event', methods=['GET', 'POST'])
 def new_event():
-    """Display the fruit creation page & process data from the creation form."""
+    """Display the event creation page & process data from the creation form."""
     if request.method == 'POST':
-        print(request.form['timeslot'])
         new_event = Event(
             request.form['title'],
             ObjectId(request.form['employee']),
@@ -62,8 +61,8 @@ def new_event():
             request.form['timeslot']
         )
 
-        # res = database.events.insert_one(new_event.get_dict())
-        # new_event.set_id(res.inserted_id)
+        res = database.events.insert_one(new_event.get_dict())
+        new_event.set_id(res.inserted_id)
         return redirect(url_for('home'))
 
     else:
@@ -78,7 +77,7 @@ def new_event():
 
 @app.route('/new_employee', methods=['GET', 'POST'])
 def new_employee():
-    """Display the fruit creation page & process data from the creation form."""
+    """Display the event creation page & process data from the creation form."""
     if request.method == 'POST':
         new_employee = Employee(
             request.form['first_name'],
@@ -93,32 +92,45 @@ def new_employee():
     else:
         return render_template('new_employee.html')
 
-# @app.route('/edit/<fruit_id>', methods=['GET', 'POST'])
-# def edit(fruit_id):
-#     """Shows the edit page and accepts a POST request with edited data."""
-#     if request.method == 'POST':
-#         updated_fruit_info = { "$set": {
-#             'fruit_name': request.form["fruit_name"],
-#             'variety': request.form["variety"],
-#             'photo_url': request.form["photo_url"],
-#             'date_planted': request.form["date_planted"]
-#         }}
-#         database.fruits.update_one({"_id": ObjectId(fruit_id)}, updated_fruit_info)
-#         return redirect(url_for('detail', fruit_id = fruit_id))
-#     else:
-#         fruit_to_show = database.fruits.find_one_or_404({"_id": ObjectId(fruit_id)})
-#         context = {
-#             'fruit': fruit_to_show
-#         }
-#
-#         return render_template('edit.html', **context)
-#
-# @app.route('/delete/<fruit_id>', methods=['POST'])
-# def delete(fruit_id):
-#     """Delete's specified fruit and all of its harvest data"""
-#     database.fruits.delete_one({"_id": ObjectId(fruit_id)})
-#     database.harvests.delete_many({"fruit_id": ObjectId(fruit_id)})
-#     return redirect(url_for('fruits_list'))
+@app.route('/edit_event/<event_id>', methods=['GET', 'POST'])
+def edit_event(event_id):
+    """Display the event details page."""
+    if request.method == 'POST':
+        new_event = Event(
+            request.form['title'],
+            ObjectId(request.form['employee']),
+            request.form['color'],
+            request.form['details'],
+            request.form['date'],
+            request.form['timeslot']
+        )
+        updated_event_info = { "$set": {
+            'event_name': request.form["title"],
+            'employee': ObjectId(request.form["employee"]),
+            'color': request.form["color"],
+            'details': request.form["details"],
+            'date': request.form["date"],
+            'timeslot': request.form["timeslot"],
+        }}
+        database.events.update_one({"_id": ObjectId(event_id)}, updated_event_info)
+        return redirect(url_for('get_calendar'))
+    else:
+        event_to_show = database.events.find_one_or_404({"_id": ObjectId(event_id)})
+        context = {
+            'event' : event_to_show,
+            "employees": database.employees.find(),
+            "timeslots": timeslots,
+            "min_date": datetime.now(),
+            'max_date': datetime.now() + timedelta(days=25),
+        }
+        return render_template('edit_event.html', **context)
+
+
+@app.route('/delete/<event_id>')
+def delete(event_id):
+    """Delete's specified event and all of its harvest data"""
+    database.events.delete_one({"_id": ObjectId(event_id)})
+    return redirect(url_for('get_calendar'))
 
 # Error Handling
 

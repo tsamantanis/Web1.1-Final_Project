@@ -4,7 +4,7 @@
 
 <main class="row">
     <div class="col-12 col-md-8">
-        <h1>New Event</h1>
+        <h1>Edit Event</h1>
     </div>
 
     <form class="col-12 col-md-6"  method='POST'>
@@ -12,7 +12,7 @@
             <div class="col-12 col-md-6">
                 <label>
                     Title <br  />
-                    <input type="text" name="title" class="d-block"/>
+                    <input type="text" name="title" class="d-block" value={{event.title}}/>
                 </label>
             </div>
             <div class="col-12 col-md-6">
@@ -20,9 +20,15 @@
                     Employee <br  />
                     <select name="employee"class="d-block">
                         {% for employee in employees %}
+                            {% if employee._id == event.employee %}
+                            <option value={{employee._id}} selected>
+                                {{employee.first_name + " " + employee.last_name}}
+                            </option>
+                            {% else %}
                             <option value={{employee._id}}>
                                 {{employee.first_name + " " + employee.last_name}}
                             </option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </label>
@@ -32,7 +38,7 @@
             <div class="col-12 col-md-6">
                 <label>
                     Date <br  />
-                    <input type="date" name="date" min="{{ min_date.strftime('%Y-%m-%d') }}" max="{{ max_date.strftime('%Y-%m-%d') }}" class="d-block">
+                    <input type="date" name="date" min="{{ min_date.strftime('%Y-%m-%d') }}" max="{{ max_date.strftime('%Y-%m-%d') }}" class="d-block" value={{event.date}}>
                 </label>
             </div>
             <div class="col-12 col-md-6">
@@ -40,9 +46,15 @@
                     Timeslot <br  />
                     <select name="timeslot" class="d-block">
                         {% for timeslot in timeslots %}
+                         {% if timeslot | string() == event.timeslot %}
+                            <option value={{timeslot | string() }} selected>
+                                {{timeslot}}
+                            </option>
+                        {% else %}
                             <option value={{timeslot | string() }}>
                                 {{timeslot}}
                             </option>
+                        {% endif %}
                         {% endfor %}
                     </select>
                 </label>
@@ -52,13 +64,13 @@
             <div class="col-12 col-md-6">
                 <label>
                     Details <br  />
-                    <textarea rows="3" name="details" class="d-block"></textarea>
+                    <textarea rows="3" name="details" class="d-block">{{event.details}}</textarea>
                 </label>
             </div>
             <div class="col-12 col-md-6">
                 <label>
                     Color <br  />
-                    <input type="color" name="color" class="d-block">
+                    <input type="color" name="color" class="d-block" value={{event.color}}>
                 </label>
             </div>
         </div>

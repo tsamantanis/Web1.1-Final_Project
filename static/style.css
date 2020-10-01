@@ -18,7 +18,7 @@ body {
 }
 
 a {
-      text-decoration: none;
+    text-decoration: none !important;
 }
 
 label {
@@ -30,6 +30,16 @@ label {
 }
 
 input {
+    border: none;
+    box-sizing: border-box;
+    border-radius: 10px;
+    min-height: 3vh;
+    color: var(--light-gray) !important;
+    outline: none;
+    padding: 5px 5px 5px 10px;
+}
+
+textarea {
     border: none;
     box-sizing: border-box;
     border-radius: 10px;
@@ -74,10 +84,44 @@ input[type="color"] {
     font-weight: 900;
     font-size: 20px;
     line-height: 150%;
+    cursor: pointer;
+}
+
+.button-event {
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.button-event-gray {
+    color: var(--light-gray);
+    border: 1px solid var(--light-gray) !important;
+}
+
+.button-event-gray:hover {
+    background: var(--light-gray);
+    border: none;
+    color: white;
+}
+
+.button-event-delete {
+    color: var(--red);
+    border: 1px solid var(--red) !important;
+}
+
+.button-event-delete:hover {
+    background: var(--red);
+    border: none;
+    color: white;
 }
 
 .button-submit {
-    background: var(--blue)
+    background: var(--blue);
 }
 
 .button-availability {
@@ -108,14 +152,14 @@ input[type="color"] {
 .employee_container {
     display: flex;
     flex-direction: column;
-    margin: 0px 20px 0px 20px;
+    margin: 0px 7.5px 0px 7.5px;
 }
 
 .event_container {
     min-width: 289px;
     max-width: 289px;
     min-height: 184px;
-    background: var(--pink);
+    /* background: var(--pink); */
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -124,6 +168,7 @@ input[type="color"] {
     box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(18px);
     margin-bottom: 15px;
+    color: white;
 }
 
 .event_space {

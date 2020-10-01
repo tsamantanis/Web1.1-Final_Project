@@ -13,14 +13,20 @@
                             </div>
                         </a>
                     {% else %}
-                        <div class="event_container">
-                            <h3>{{value.title}}</h3>
-                            <p>
-                                {{value.details}}
-                            </p>
-                            <p>
-                                {{value.timeslot}}
-                            </p>
+                        <div class="event_container" style="background: {{value.color}}">
+                            <div>
+                                <h3>{{value.title}}</h3>
+                                <p>
+                                    {{value.details}}
+                                </p>
+                                <p>
+                                    {{value.timeslot}}
+                                </p>
+                            </div>
+                            <div>
+                                <a href={{"/edit_event/" + value.id | string()}} class="button-event button-event-gray">Edit</a>
+                                <a href={{"/delete/" + value.id | string()}} class="button-event button-event-delete">Delete</a>
+                            </div>
                         </div>
                     {% endif %}
             {% endfor %}
