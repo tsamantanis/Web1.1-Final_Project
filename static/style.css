@@ -34,9 +34,11 @@ input {
     box-sizing: border-box;
     border-radius: 10px;
     min-height: 3vh;
-    color: var(--light-gray) !important;
+    color: white !important;
     outline: none;
     padding: 5px 5px 5px 10px;
+    background: none;
+    border: 2px solid white;
 }
 
 textarea {
@@ -44,9 +46,11 @@ textarea {
     box-sizing: border-box;
     border-radius: 10px;
     min-height: 3vh;
-    color: var(--light-gray) !important;
+    color: white !important;
     outline: none;
     padding: 5px 5px 5px 10px;
+    background: none;
+    border: 2px solid white;
 }
 
 select {
@@ -54,9 +58,15 @@ select {
     box-sizing: border-box;
     border-radius: 10px;
     min-height: 3vh;
-    color: var(--light-gray) !important;
+    color: white !important;
     outline: none;
     padding: 10px 5px 5px 10px;
+    background: none;
+    border: 2px solid white;
+}
+
+input[type="date"] {
+    color: white !important;
 }
 
 input[type="color"] {

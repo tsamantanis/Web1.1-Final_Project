@@ -85,7 +85,7 @@ def new_employee():
             request.form['email']
         )
 
-        res = database.employees.insert_one(new_employee_info.get_dict())
+        res = database.employees.insert_one(new_employee.get_dict())
         new_employee.set_id(res.inserted_id)
         return redirect(url_for('home'))
 
@@ -105,7 +105,7 @@ def edit_event(event_id):
             request.form['timeslot']
         )
         updated_event_info = { "$set": {
-            'event_name': request.form["title"],
+            'title': request.form["title"],
             'employee': ObjectId(request.form["employee"]),
             'color': request.form["color"],
             'details': request.form["details"],
