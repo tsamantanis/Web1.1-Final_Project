@@ -96,14 +96,6 @@ def new_employee():
 def edit_event(event_id):
     """Display the event details page."""
     if request.method == 'POST':
-        new_event = Event(
-            request.form['title'],
-            ObjectId(request.form['employee']),
-            request.form['color'],
-            request.form['details'],
-            request.form['date'],
-            request.form['timeslot']
-        )
         updated_event_info = { "$set": {
             'title': request.form["title"],
             'employee': ObjectId(request.form["employee"]),
@@ -116,6 +108,7 @@ def edit_event(event_id):
         return redirect(url_for('get_calendar'))
     else:
         event_to_show = database.events.find_one_or_404({"_id": ObjectId(event_id)})
+        print(event_to_show['title'])
         context = {
             'event' : event_to_show,
             "employees": database.employees.find(),

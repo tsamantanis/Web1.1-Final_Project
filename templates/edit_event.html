@@ -12,20 +12,20 @@
             <div class="col-12 col-md-6">
                 <label>
                     Title <br  />
-                    <input type="text" name="title" class="d-block" value={{event.title}} />
+                    <input type="text" name="title" class="d-block" value='{{event.title}}' />
                 </label>
             </div>
             <div class="col-12 col-md-6">
                 <label>
                     Employee <br  />
-                    <select name="employee"class="d-block">
+                    <select name="employee" class="d-block">
                         {% for employee in employees %}
                             {% if employee._id == event.employee %}
-                            <option value={{employee._id}} selected>
+                            <option value='{{employee._id}}' selected>
                                 {{employee.first_name + " " + employee.last_name}}
                             </option>
                             {% else %}
-                            <option value={{employee._id}}>
+                            <option value='{{employee._id}}'>
                                 {{employee.first_name + " " + employee.last_name}}
                             </option>
                             {% endif %}
@@ -47,11 +47,11 @@
                     <select name="timeslot" class="d-block">
                         {% for timeslot in timeslots %}
                          {% if timeslot | string() == event.timeslot %}
-                            <option value={{timeslot | string() }} selected>
+                            <option value='{{timeslot | string() }}' selected>
                                 {{timeslot}}
                             </option>
                         {% else %}
-                            <option value={{timeslot | string() }}>
+                            <option value='{{timeslot | string() }}'>
                                 {{timeslot}}
                             </option>
                         {% endif %}
