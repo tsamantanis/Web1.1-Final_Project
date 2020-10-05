@@ -7,7 +7,7 @@
             <h2>{{employee.first_name + " " + employee.last_name}}</h2>
                 {% for key, value in employee.events.items() %}
                     {% if value == "" %}
-                        <a href="/new_event">
+                        <a href={{"/new_event/" + employee.id + "/" + date_full + "/" + key}}>
                             <div class="event_space">
                                 <h4>Add Event</h4>
                             </div>

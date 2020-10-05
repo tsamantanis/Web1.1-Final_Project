@@ -49,13 +49,14 @@ def get_calendar(date_input):
         "timeslots": timeslots,
         "employee_list": employee_list,
         "date": str(date_current.month) + "/" + str(date_current.day),
+        "date_full": date_input,
         "date_next": date_next.strftime('%Y-%m-%d'),
         "date_prev": date_prev.strftime('%Y-%m-%d')
     }
     return render_template('calendar.html', **context)
 
-@app.route('/new_event', methods=['GET', 'POST'])
-def new_event():
+@app.route('/new_event/<employee_id>/<date_input>/<timeslot>', methods=['GET', 'POST'])
+def new_event(employee_id, date_input, timeslot):
     """Display the event creation page & process data from the creation form."""
     if request.method == 'POST':
         new_event = Event(
@@ -73,6 +74,9 @@ def new_event():
 
     else:
         context = {
+            "employee_id": ObjectId(employee_id),
+            "timeslot_input": timeslot,
+            "date_input": date_input,
             "employees": database.employees.find(),
             "timeslots": timeslots,
             "min_date": datetime.now(),
@@ -114,7 +118,6 @@ def edit_event(event_id):
         return redirect(url_for('get_calendar'))
     else:
         event_to_show = database.events.find_one_or_404({"_id": ObjectId(event_id)})
-        print(event_to_show['title'])
         context = {
             'event' : event_to_show,
             "employees": database.employees.find(),
