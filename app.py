@@ -111,10 +111,11 @@ def edit_event(event_id):
             'timeslot': request.form["timeslot"],
         }}
         database.events.update_one({"_id": ObjectId(event_id)}, updated_event_info)
-        return redirect(url_for('get_calendar'))
+        return redirect(url_for('get_calendar', date_input=request.form["date"]))
     else:
         event_to_show = database.events.find_one_or_404({"_id": ObjectId(event_id)})
         context = {
+            'event_id': event_id,
             'event' : event_to_show,
             "employees": database.employees.find(),
             "timeslots": timeslots,
@@ -135,7 +136,7 @@ def edit_employee(employee_id):
 
         res = database.employees.update_one({"_id": ObjectId(employee_id)}, updated_employee_info)
         new_employee.set_id(res.inserted_id)
-        return redirect(url_for('get_calendar'))
+        return redirect(url_for('get_calendar', date_input=datetime.now().strftime('%Y-%m-%d')))
 
     else:
         employee_to_show = database.employees.find_one_or_404({"_id": ObjectId(employee_id)})
