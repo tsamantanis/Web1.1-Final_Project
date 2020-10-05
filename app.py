@@ -22,7 +22,6 @@ from Calendar import Calendar
 @app.route('/')
 def home():
     """Display all events and employees in kanban calendar."""
-    print(date.today())
     context = {
         'employees': database.employees.find(),
         'events': database.events.find()
@@ -87,7 +86,7 @@ def new_event(employee_id, date_input, timeslot):
 
 @app.route('/new_employee', methods=['GET', 'POST'])
 def new_employee():
-    """Display the event creation page & process data from the creation form."""
+    """Display the employee creation page & process data from the creation form."""
     if request.method == 'POST':
         new_employee = Employee(
             request.form['first_name'],
@@ -104,7 +103,7 @@ def new_employee():
 
 @app.route('/edit_event/<event_id>', methods=['GET', 'POST'])
 def edit_event(event_id):
-    """Display the event details page."""
+    """Display the event edit page."""
     if request.method == 'POST':
         updated_event_info = { "$set": {
             'title': request.form["title"],
@@ -127,12 +126,41 @@ def edit_event(event_id):
         }
         return render_template('edit_event.html', **context)
 
+@app.route('/edit_employee/<employee_id>', methods=['GET', 'POST'])
+def edit_employee(employee_id):
+    """Display the employee's edit page."""
+    if request.method == 'POST':
+        updated_employee_info = { "$set": {
+            'first_name': request.form['first_name'],
+            'last_name': request.form['last_name'],
+            'email': request.form['email']
+        }}
 
-@app.route('/delete/<event_id>')
-def delete(event_id):
-    """Delete's specified event and all of its harvest data"""
+        res = database.employees.update_one({"_id": ObjectId(employee_id)}, updated_employee_info)
+        new_employee.set_id(res.inserted_id)
+        return redirect(url_for('get_calendar'))
+
+    else:
+        employee_to_show = database.employees.find_one_or_404({"_id": ObjectId(employee_id)})
+        context = {
+            'employee' : employee_to_show,
+            'employee_id': employee_id
+        }
+        return render_template('edit_employee.html', **context)
+
+
+@app.route('/delete_employee/<employee_id>')
+def delete_employee(employee_id):
+    """Delete's specified employee and all of their events"""
+    database.events.delete_many({"employee": ObjectId(employee_id)})
+    database.employees.delete_one({"_id": ObjectId(employee_id)})
+    return redirect(url_for('get_calendar', date_input=datetime.now().strftime('%Y-%m-%d')))
+
+@app.route('/delete_event/<event_id>')
+def delete_event(event_id):
+    """Delete's specified event"""
     database.events.delete_one({"_id": ObjectId(event_id)})
-    return redirect(url_for('get_calendar'))
+    return redirect(url_for('get_calendar', date_input=datetime.now().strftime('%Y-%m-%d')))
 
 # Error Handling
 

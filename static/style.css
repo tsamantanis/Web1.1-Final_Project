@@ -138,6 +138,10 @@ input[type="color"] {
     background: var(--green);
 }
 
+.button-delete {
+    background: var(--red);
+}
+
 .image-page {
     width: 40%;
     margin-left: 30%;
@@ -216,4 +220,13 @@ input[type="color"] {
 
 .border-blue {
     border: 2px solid var(--blue);
+}
+
+.text-white {
+    color: white !important;
+}
+
+.p-l {
+    padding-left: 40%;
+    padding-right: 40%;
 }

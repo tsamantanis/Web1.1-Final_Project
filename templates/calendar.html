@@ -4,7 +4,9 @@
 <div class="calendar_container">
     {% for employee in employee_list %}
         <div class="employee_container">
-            <h2>{{employee.first_name + " " + employee.last_name}}</h2>
+            <a href={{"/edit_employee/" + employee.id}}>
+                <h2 class="text-white">{{employee.first_name + " " + employee.last_name}}</h2>
+            </a>
                 {% for key, value in employee.events.items() %}
                     {% if value == "" %}
                         <a href={{"/new_event/" + employee.id + "/" + date_full + "/" + key}}>
@@ -25,7 +27,7 @@
                             </div>
                             <div>
                                 <a href={{"/edit_event/" + value.id | string()}} class="button-event button-event-gray">Edit</a>
-                                <a href={{"/delete/" + value.id | string()}} class="button-event button-event-delete">Delete</a>
+                                <a href={{"/delete_event/" + value.id | string()}} class="button-event button-event-delete">Delete</a>
                             </div>
                         </div>
                     {% endif %}

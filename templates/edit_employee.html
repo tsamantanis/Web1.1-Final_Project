@@ -4,7 +4,7 @@
 
 <main class="row">
     <div class="col-12 col-md-8">
-        <h1>New Employee</h1>
+        <h1>Edit Employee</h1>
     </div>
 
     <form class="col-12 col-md-6"  method='POST'>
@@ -12,13 +12,13 @@
             <div class="col-12 col-md-6">
                 <label>
                     First Name <br  />
-                    <input type="text" name="first_name" class="d-block"/>
+                    <input type="text" name="first_name" class="d-block" value={{employee.first_name}} />
                 </label>
             </div>
             <div class="col-12 col-md-6">
                 <label>
                     Last Name <br  />
-                    <input type="text" name="last_name" class="d-block"/>
+                    <input type="text" name="last_name" class="d-block" value={{employee.last_name}} />
                 </label>
             </div>
         </div>
@@ -26,15 +26,18 @@
             <div class="col-12 col-md-6">
                 <label>
                      Email <br  />
-                    <input type="email" name="email" class="d-block"/>
+                    <input type="email" name="email" class="d-block" value={{employee.email}} />
                 </label>
             </div>
+        </div>
+        <div class="row">
             <div class="col-12 col-md-6">
-                 <br  />
+                <a href={{"/delete_employee/" + employee_id}} class="button button-delete btn-block p-l">Delete</a>
+            </div>
+            <div class="col-12 col-md-6">
                  <input type="submit" class="button button-submit btn-block" value="Submit">
             </div>
         </div>
-
     </form>
 </main>
 
