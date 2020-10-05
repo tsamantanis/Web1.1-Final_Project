@@ -32,6 +32,24 @@
             {% endfor %}
         </div>
     {% endfor %}
+    <div class="employee_container">
+        <h2>Actions</h2>
+        <a href={{"/get_calendar/" + date_next }}>
+            <div class="action_space border-green">
+                <h4>Next</h4>
+            </div>
+        </a>
+        <a href={{"/get_calendar/" + date_prev }}>
+            <div class="action_space border-green">
+                <h4>Previous</h4>
+            </div>
+        </a>
+        <a href="/new_employee">
+            <div class="action_space border-blue">
+                <h4>Add Employee</h4>
+            </div>
+        </a>
+    </div>
 </div>
 
 {% endblock home_content %}

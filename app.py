@@ -6,6 +6,7 @@ from setup import app
 from setup import database
 from setup import ObjectId
 from datetime import date, datetime, timedelta
+import calendar
 
 from timeslots import timeslots
 from Event import Event
@@ -28,8 +29,8 @@ def home():
     }
     return render_template('home.html', **context)
 
-@app.route('/get_calendar')
-def get_calendar():
+@app.route('/get_calendar/<date_input>')
+def get_calendar(date_input):
     """Returns current state of the calendar"""
     employees = database.employees.find()
     employee_list = []
@@ -37,14 +38,23 @@ def get_calendar():
         a_employee = Employee(employee['first_name'], employee['last_name'], employee['email'])
         id = employee['_id']
         a_employee.set_id(str(id))
-        a_employee.get_events_today()
+        a_employee.get_events(date_input)
         employee_list.append(a_employee)
     # calendar = Calendar(employee_list)
     # print(calendar.get_dict())
     # return json.dumps(calendar.get_dict())
+    month_range = calendar.monthrange(int(date_input[0:4]), int(date_input[5:7]))
+    prev_month_range = calendar.monthrange(int(date_input[0:4]), int(date_input[5:7]) - 1)
+    print(int(date_input[8:10]) + 1 if int(date_input[8:10]) < month_range[1] else 1)
+    date_current = date(int(date_input[0:4]), int(date_input[5:7]), int(date_input[8:10]))
+    date_next = date(int(date_input[0:4]), int(date_input[5:7]), int(date_input[8:10]) + 1 if int(date_input[8:10]) < month_range[1] else 1)
+    date_prev = date(int(date_input[0:4]), int(date_input[5:7]), int(date_input[8:10]) - 1 if int(date_input[8:10]) > 1 else prev_month_range[1])
     context = {
         "timeslots": timeslots,
-        "employee_list": employee_list
+        "employee_list": employee_list,
+        "date": str(date_current.month) + "/" + str(date_current.day),
+        "date_next": date_next.strftime('%Y-%m-%d'),
+        "date_prev": date_prev.strftime('%Y-%m-%d')
     }
     return render_template('calendar.html', **context)
 
