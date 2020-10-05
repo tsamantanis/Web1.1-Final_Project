@@ -46,6 +46,7 @@ def get_calendar(date_input):
     date_prev = date(int(date_input[0:4]), int(date_input[5:7]), int(date_input[8:10]) - 1 if int(date_input[8:10]) > 1 else prev_month_range[1])
     context = {
         "timeslots": timeslots,
+        "is_empty": len(employee_list) > 0,
         "employee_list": employee_list,
         "date": str(date_current.month) + "/" + str(date_current.day),
         "date_full": date_input,
