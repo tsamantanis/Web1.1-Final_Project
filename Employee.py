@@ -36,31 +36,6 @@ class Employee():
         """Overrise abstract method delete"""
         database.employees.delete_one({"_id": ObjectId(self.id)})
 
-    def get_events_today(self):
-        """Returns list of today's events for specific employee"""
-        event_list = []
-        timeslot_events = {
-            "09:00-11:00": "",
-            "11:00-13:00": "",
-            "13:00-15:00": "",
-            "15:00-17:00": ""
-        }
-        for event_i in database.events.find({"employee": ObjectId(self.id), "date": str(date.today())}):
-            id = event_i['_id']
-            event = Event(
-                event_i['title'],
-                event_i['employee'],
-                event_i['color'],
-                event_i['details'],
-                event_i['date'],
-                event_i['timeslot']
-            )
-            event.set_id(str(id))
-            timeslot_events[event.timeslot] = event
-            event_list.append(event.get_dict())
-        self.events = timeslot_events
-        return timeslot_events
-
     def get_events(self, date_input):
         """Returns list of events for specific employee on given date"""
         date_input = date(int(date_input[0:4]), int(date_input[5:7]), int(date_input[8:10]))
