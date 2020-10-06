@@ -135,7 +135,6 @@ def edit_employee(employee_id):
         }}
 
         res = database.employees.update_one({"_id": ObjectId(employee_id)}, updated_employee_info)
-        new_employee.set_id(res.inserted_id)
         return redirect(url_for('get_calendar', date_input=datetime.now().strftime('%Y-%m-%d')))
 
     else:
