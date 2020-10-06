@@ -5,7 +5,7 @@
     {% for employee in employee_list %}
         <div class="employee_container">
             <a href={{"/edit_employee/" + employee.id}}>
-                <h2 class="text-white">{{employee.first_name + " " + employee.last_name}}</h2>
+                <h2 class="text-white">{{employee.first_name + " " + employee.last_name}} <i class="fas fa-pencil-alt float-right color-gray"></i></h2>
             </a>
                 {% for key, value in employee.events.items() %}
                     {% if value == "" %}
@@ -37,12 +37,12 @@
         {% if not is_empty %}
             <a href={{"/get_calendar/" + date_next }}>
                 <div class="action_space border-green">
-                    <h4>Next</h4>
+                    <h4>Next Day</h4>
                 </div>
             </a>
             <a href={{"/get_calendar/" + date_prev }}>
                 <div class="action_space border-green">
-                    <h4>Previous</h4>
+                    <h4>Previous Day</h4>
                 </div>
             </a>
         {% endif %}
