@@ -4,6 +4,7 @@ from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
-app.config["MONGO_URI"] = "mongodb://localhost:27017/kanbanCalendar"
+host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/kanbanCalendar') + "?retryWrites=false"
+app.config["MONGO_URI"] = host
 mongo = PyMongo(app)
 database = mongo.db
