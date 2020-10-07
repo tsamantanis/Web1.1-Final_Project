@@ -1,5 +1,6 @@
 from setup import ObjectId
-class Event():
+from DB_Entity import DB_Entity
+class Event(DB_Entity):
     def __init__(self, title, employee, color, details, date, timeslot):
         """Initialize instance of Event class with title, employee, color, details, and timeslot properties"""
         self.title = title
@@ -8,10 +9,6 @@ class Event():
         self.details = details
         self.date = date
         self.timeslot = timeslot
-
-    def set_id(self, id):
-        """Adds an id property to the Event class to store MongoDb ObjectId"""
-        self.id = id
 
     def get_dict(self):
         """Override abstract method get_dict"""

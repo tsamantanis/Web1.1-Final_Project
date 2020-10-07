@@ -1,7 +1,6 @@
 from flask import request, redirect, render_template, url_for
 import json
-# from flask_pymongo import PyMongo
-# from bson.objectid import ObjectId
+
 from setup import app
 from setup import database
 from setup import ObjectId
@@ -12,12 +11,6 @@ from timeslots import timeslots
 from Event import Event
 from Employee import Employee
 from Calendar import Calendar
-
-# app = Flask(__name__)
-#
-# app.config["MONGO_URI"] = "mongodb://localhost:27017/kanbanCalendar"
-# mongo = PyMongo(app)
-# database = mongo.db
 
 @app.route('/')
 def home():

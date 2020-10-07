@@ -1,10 +1,10 @@
 from setup import database
 from setup import ObjectId
 from datetime import date
-
+from DB_Entity import DB_Entity
 from Event import Event
 
-class Employee():
+class Employee(DB_Entity):
     def __init__(self, first_name, last_name, email):
         """Initialize instance of Employee class with name, age, and email properties"""
         self.first_name = first_name
@@ -20,10 +20,6 @@ class Employee():
             "email": self.email,
             "events": self.events
         }
-
-    def set_id(self, id):
-        """Adds an id property to the Employee class to store MongoDb ObjectId"""
-        self.id = id
 
     def update(self, first_name, last_name, email):
         """Updates employee details"""
